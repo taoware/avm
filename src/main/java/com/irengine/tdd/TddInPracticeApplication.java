@@ -1,5 +1,7 @@
 package com.irengine.tdd;
 
+import java.util.Scanner;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -80,6 +82,11 @@ public class TddInPracticeApplication {
     		
     	});
     	springApplication.run(args);
+    	
+    	// wait key-in to exit
+    	Scanner sc = new Scanner(System.in);
+    	sc.nextLine();
+    	sc.close();
     	
     }
 }
