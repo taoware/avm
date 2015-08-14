@@ -4,8 +4,9 @@
 .settings/
 .springBeans
 
-# WebStorm project files
-.idea
+# Intellij project files
+*.iml
+.idea/
 
 # Workspace
 .metadata
