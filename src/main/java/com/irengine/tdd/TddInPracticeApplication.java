@@ -73,20 +73,23 @@ public class TddInPracticeApplication {
     	SpringApplication springApplication = new SpringApplication(TddInPracticeApplication.class);
     	springApplication.addListeners(new ApplicationListener<SpringApplicationEvent>() {
 
-			@Override
-			public void onApplicationEvent(SpringApplicationEvent event) {
+            @Override
+            public void onApplicationEvent(SpringApplicationEvent event) {
 
-				printEventInfo(event);
-				
-			}
-    		
-    	});
+                printEventInfo(event);
+
+            }
+
+        });
     	springApplication.run(args);
     	
     	// wait key-in to exit
+
+        System.out.println("Press any key to exit...");
     	Scanner sc = new Scanner(System.in);
     	sc.nextLine();
+        System.out.println("Exiting...");
     	sc.close();
-    	
+
     }
 }
