@@ -1,13 +1,13 @@
 package com.irengine.tdd.runner;
 
-import com.irengine.tdd.network.SimpleClient;
-import com.irengine.tdd.network.SimpleServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.irengine.tdd.network.SimpleClient;
 
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE)

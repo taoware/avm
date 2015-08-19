@@ -6,18 +6,22 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 
 public class SimpleClientInitializer extends ChannelInitializer<SocketChannel> {
+	
+    private static final StringDecoder DECODER = new StringDecoder();
+    private static final StringEncoder ENCODER = new StringEncoder();
+
+    private static final SimpleClientHandler CLIENT_HANDLER = new SimpleClientHandler();
+
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline().addLast(
-                new LoggingHandler(LogLevel.INFO),
                 new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()),
-                new StringDecoder(),
-                new StringEncoder(),
-                new SimpleClientHandler());    }
+                DECODER,
+                ENCODER,
+                CLIENT_HANDLER);
+   }
 
 }

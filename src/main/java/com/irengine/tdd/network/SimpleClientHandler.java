@@ -1,13 +1,10 @@
 package com.irengine.tdd.network;
 
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelHandler.Sharable;
 
-import java.net.InetAddress;
-import java.util.Date;
-
+@Sharable
 public class SimpleClientHandler extends SimpleChannelInboundHandler<String> {
 
     @Override

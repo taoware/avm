@@ -1,19 +1,19 @@
 package com.irengine.tdd.network;
 
-import io.netty.bootstrap.Bootstrap;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import com.irengine.tdd.data.AuditCommand;
+import com.irengine.tdd.data.CancelCommand;
+import com.irengine.tdd.data.Command;
+import com.irengine.tdd.data.VerifyCommand;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class SimpleClient {
 
@@ -53,30 +53,45 @@ public class SimpleClient {
                         .channel(NioSocketChannel.class)
                         .handler(new SimpleClientInitializer());
 
-                // 连接服务端
                 Channel ch = b.connect(hostName, portNumber).sync().channel();
 
-                String importantInfo[] = {
-                        "Mares eat oats",
-                        "Does eat oats",
-                        "Little lambs eat ivy",
-                        "A kid will eat ivy too"
-                };
-                for (int i = 0;
-                     i < importantInfo.length;
-                     i++) {
+                ChannelFuture lastWriteFuture = null;
+                
+                String machine = "90000272";
+                String coupon = "2875414474";
+                String item = "2";
+                
+                // send verify command
+                Command data10 = new VerifyCommand(machine, coupon, item);
+                lastWriteFuture = ch.writeAndFlush(data10.toString());
 
-                    Thread.sleep(1000);
+                // send audit command
+                Command data11 = new AuditCommand(machine, coupon);
+                lastWriteFuture = ch.writeAndFlush(data11.toString());
 
-                    log.info("Client: " + importantInfo[i]);
-                    ch.writeAndFlush(importantInfo[i] + "\r\n");
+                // send cancel command
+                Command data12 = new CancelCommand(machine, coupon);
+                lastWriteFuture = ch.writeAndFlush(data12.toString());
+                
+                // send invalid command
+                Command data00 = new Command(Command.COMMAND_TYPE_INVALID, machine, coupon);
+                lastWriteFuture = ch.writeAndFlush(data00.toString());
+
+                // send verify command again
+                lastWriteFuture = ch.writeAndFlush(data10.toString());
+
+                if (lastWriteFuture != null) {
+                    lastWriteFuture.sync();
                 }
+                Thread.sleep(5000);
+
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 // The connection is closed automatically on shutdown.
                 group.shutdownGracefully();
             }
+
         }
     }
 
