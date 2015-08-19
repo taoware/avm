@@ -1,18 +1,18 @@
 package com.irengine.tdd.data;
 
-public class AuditCommand extends Command {
+public class CancelRequestCommand extends RequestCommand {
 
-    public AuditCommand() {
-    	this.type = COMMAND_TYPE_AUDIT;
+    public CancelRequestCommand() {
+    	this.type = COMMAND_TYPE_CANCEL;
     }
     
-    public AuditCommand(String machine, String coupon) {
+    public CancelRequestCommand(String machine, String coupon) {
         this();
         this.machine = machine;
         this.coupon = coupon;
     }
     
-    public AuditCommand(String data) {
+    public CancelRequestCommand(String data) {
     	this();
         this.machine = data.substring(2, 10);
         this.coupon = data.substring(10, 20);

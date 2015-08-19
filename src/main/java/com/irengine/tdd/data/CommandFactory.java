@@ -2,17 +2,17 @@ package com.irengine.tdd.data;
 
 public class CommandFactory {
 	
-	public static Command CreateCommand(String data) {
+	public static RequestCommand CreateCommand(String data) {
 		
 		String type = data.substring(0, 2);
 		
 		switch (type) {
 		case Command.COMMAND_TYPE_VERIFY:
-			return new VerifyCommand(data);
+			return new VerifyRequestCommand(data);
 		case Command.COMMAND_TYPE_AUDIT:
-			return new AuditCommand(data);
+			return new AuditRequestCommand(data);
 		case Command.COMMAND_TYPE_CANCEL:
-			return new CancelCommand(data);
+			return new CancelRequestCommand(data);
 		default:
 			return null;
 		}

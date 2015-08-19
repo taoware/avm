@@ -3,8 +3,10 @@ package com.irengine.tdd.network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.irengine.tdd.data.Command;
 import com.irengine.tdd.data.CommandFactory;
+import com.irengine.tdd.data.CommandProcessor;
+import com.irengine.tdd.data.RequestCommand;
+import com.irengine.tdd.data.ResponseCommand;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -23,9 +25,15 @@ public class SimpleServerHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelRead0(ChannelHandlerContext ctx, String request) {
 
-    	log.info("business logic for " + request);
-    	Command command = CommandFactory.CreateCommand(request);
-        log.info(command.getClass().toString() + ": " + command.toString());
+    	RequestCommand requestCommand = CommandFactory.CreateCommand(request);
+        log.info("Request: " + request + ", " + requestCommand.getClass().toString() + ": " + requestCommand.toString());
+        ResponseCommand responseCommand = CommandProcessor.action(requestCommand);
+        if (null != responseCommand) {
+            String response = responseCommand.toString();
+            log.info("Response: " + response + ", " + responseCommand.getClass().toString() + ": " + responseCommand.toString());
+            ctx.write(response);
+            ctx.flush();
+        }
 
     }
 

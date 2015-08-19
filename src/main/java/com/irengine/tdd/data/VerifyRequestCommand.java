@@ -1,21 +1,21 @@
 package com.irengine.tdd.data;
 
-public class VerifyCommand extends Command {
+public class VerifyRequestCommand extends RequestCommand {
 
     private String item;
 
-    public VerifyCommand() {
+    public VerifyRequestCommand() {
     	this.type = COMMAND_TYPE_VERIFY;
     }
     
-    public VerifyCommand(String machine, String coupon, String item) {
+    public VerifyRequestCommand(String machine, String coupon, String item) {
         this();
         this.machine = machine;
         this.coupon = coupon;
         this.item = item;
     }
 
-    public VerifyCommand(String data) {
+    public VerifyRequestCommand(String data) {
     	this();
         this.machine = data.substring(2, 10);
         this.coupon = data.substring(10, 20);

@@ -3,10 +3,11 @@ package com.irengine.tdd.network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.irengine.tdd.data.AuditCommand;
-import com.irengine.tdd.data.CancelCommand;
+import com.irengine.tdd.data.AuditRequestCommand;
+import com.irengine.tdd.data.CancelRequestCommand;
 import com.irengine.tdd.data.Command;
-import com.irengine.tdd.data.VerifyCommand;
+import com.irengine.tdd.data.RequestCommand;
+import com.irengine.tdd.data.VerifyRequestCommand;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -62,19 +63,19 @@ public class SimpleClient {
                 String item = "2";
                 
                 // send verify command
-                Command data10 = new VerifyCommand(machine, coupon, item);
+                Command data10 = new VerifyRequestCommand(machine, coupon, item);
                 lastWriteFuture = ch.writeAndFlush(data10.toString());
 
                 // send audit command
-                Command data11 = new AuditCommand(machine, coupon);
+                Command data11 = new AuditRequestCommand(machine, coupon);
                 lastWriteFuture = ch.writeAndFlush(data11.toString());
 
                 // send cancel command
-                Command data12 = new CancelCommand(machine, coupon);
+                Command data12 = new CancelRequestCommand(machine, coupon);
                 lastWriteFuture = ch.writeAndFlush(data12.toString());
                 
                 // send invalid command
-                Command data00 = new Command(Command.COMMAND_TYPE_INVALID, machine, coupon);
+                Command data00 = new RequestCommand(Command.COMMAND_TYPE_INVALID, machine, coupon);
                 lastWriteFuture = ch.writeAndFlush(data00.toString());
 
                 // send verify command again
