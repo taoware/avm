@@ -15,7 +15,7 @@ public class AuditResponseCommand extends ResponseCommand {
     			String.format("%02d", this.couponLength) +
     			this.type +
     			this.coupon +
-    			(status ? "1" : "0");
+    			(status ? "1" : "2");
     }
     
 }
