@@ -25,6 +25,13 @@ public class BinaryDecoder extends ByteToMessageDecoder {
         ByteBuf command;
         int index = in.readerIndex();
         
+        // command type 00
+        if (in.getByte(index) == 'F' && in.getByte(index + 1) == 'F') {
+        	in.clear();
+        	ctx.channel().close();
+        	ctx.channel().parent().close();
+            log.info("Server exited.");
+        }
         // command type 10 -- verify coupon
         if (in.getByte(index) == '1' && in.getByte(index + 1) == '0') {
             if (in.readableBytes() >= 21) {

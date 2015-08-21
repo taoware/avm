@@ -81,6 +81,9 @@ public class SimpleClient {
                 // send verify command again
                 lastWriteFuture = ch.writeAndFlush(data10.toString());
 
+                Thread.sleep(1000);
+                lastWriteFuture = ch.writeAndFlush("FF");
+
                 if (lastWriteFuture != null) {
                     lastWriteFuture.sync();
                 }
@@ -92,6 +95,7 @@ public class SimpleClient {
                 // The connection is closed automatically on shutdown.
                 group.shutdownGracefully();
             }
+        	log.info("Client exited.");
 
         }
     }
