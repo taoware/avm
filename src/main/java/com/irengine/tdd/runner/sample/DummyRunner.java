@@ -1,4 +1,4 @@
-package com.irengine.tdd.runner;
+package com.irengine.tdd.runner.sample;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

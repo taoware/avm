@@ -1,4 +1,4 @@
-package com.irengine.tdd.runner;
+package com.irengine.tdd.runner.sample;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.irengine.tdd.network.SimpleClient;
+import com.irengine.tdd.network.sample.SimpleClient;
 
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE)

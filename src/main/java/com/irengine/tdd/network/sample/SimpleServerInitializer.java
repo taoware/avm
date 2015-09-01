@@ -1,4 +1,4 @@
-package com.irengine.tdd.network;
+package com.irengine.tdd.network.sample;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
