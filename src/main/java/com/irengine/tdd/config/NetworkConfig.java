@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
 
 import com.irengine.tdd.network.ServerManager;
-import com.irengine.tdd.network.netty.AvmFrameDecoder;
 import com.irengine.tdd.network.netty.NettyConfig;
 import com.irengine.tdd.network.netty.NettyTCPServer;
 import com.irengine.tdd.network.netty.ServerManagerImpl;
@@ -86,12 +84,6 @@ public class NetworkConfig {
 	@Bean(name = "loggingHandler")
 	public LoggingHandler loggingHandler() {
 		return new LoggingHandler(LogLevel.INFO);
-	}
-
-	@Bean(name = "avmFrameDecoder")
-	@Scope("prototype")
-	public AvmFrameDecoder avmPreprocessorDecoder() {
-		return new AvmFrameDecoder();
 	}
 
 	@Bean(name = "stringEncoder")

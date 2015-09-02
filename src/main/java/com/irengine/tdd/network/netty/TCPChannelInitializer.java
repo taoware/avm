@@ -16,10 +16,8 @@ import io.netty.handler.logging.LoggingHandler;
 public class TCPChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 	@Autowired
+	private
 	LoggingHandler loggingHandler;
-
-	@Autowired
-	AvmFrameDecoder avmFrameDecoder;
 
 	@Autowired
 	StringDecoder stringDecoder;
@@ -34,10 +32,22 @@ public class TCPChannelInitializer extends ChannelInitializer<SocketChannel> {
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
 		pipeline.addLast("logging", loggingHandler);
-		pipeline.addLast("frame", avmFrameDecoder);
-//		pipeline.addLast("decoder", stringDecoder);
+		pipeline.addLast("frame", avmFrameDecoder());
+		pipeline.addLast("decoder", stringDecoder);
+		pipeline.addLast("encoder", stringEncoder);
 		pipeline.addLast("handler", serverHandler);
-//		pipeline.addLast("encoder", stringEncoder);
+	}
+	
+	public AvmFrameDecoder avmFrameDecoder() {
+		return new AvmFrameDecoder();
+	}
+
+	public LoggingHandler getLoggingHandler() {
+		return loggingHandler;
+	}
+
+	public void setLoggingHandler(LoggingHandler loggingHandler) {
+		this.loggingHandler = loggingHandler;
 	}
 
 	public StringDecoder getStringDecoder() {
