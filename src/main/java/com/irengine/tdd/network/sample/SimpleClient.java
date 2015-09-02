@@ -81,7 +81,7 @@ public class SimpleClient {
                 // send verify command again
                 lastWriteFuture = ch.writeAndFlush(data10.toString());
 
-                Thread.sleep(1000);
+                Thread.sleep(10000);
                 lastWriteFuture = ch.writeAndFlush("FF");
 
                 if (lastWriteFuture != null) {

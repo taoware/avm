@@ -1,5 +1,7 @@
 package com.irengine.tdd;
 
+import java.util.concurrent.CountDownLatch;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +12,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
+
+import com.irengine.tdd.network.ServerManager;
+import com.irengine.tdd.utility.ApplicationContextHelper;
 
 @SpringBootApplication
 public class TddInPracticeApplication {
@@ -64,8 +69,13 @@ public class TddInPracticeApplication {
     	log.info("[" + event.getClass().getSimpleName() + "] from " + event.getSource());
     	
 	}
+	
+	@Bean
+	public CountDownLatch closeLatch() {
+		return new CountDownLatch(1);
+	}
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
     	
     	// listen SpringApplicationEvent which is spring boot event and triggered before bean created.
     	SpringApplication springApplication = new SpringApplication(TddInPracticeApplication.class);
@@ -80,6 +90,12 @@ public class TddInPracticeApplication {
 
         });
     	springApplication.run(args);
+    	
+    	ServerManager manager = ApplicationContextHelper.getApplicationContext().getBean(ServerManager.class);
+    	manager.startServers();
 
+		CountDownLatch closeLatch = ApplicationContextHelper.getApplicationContext().getBean(CountDownLatch.class);
+		closeLatch.await();
+		
     }
 }
