@@ -1,5 +1,7 @@
 package com.irengine.tdd;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @SpringBootApplication
 public class TddInPracticeApplication {
@@ -66,6 +69,17 @@ public class TddInPracticeApplication {
     	log.info("[" + event.getClass().getSimpleName() + "] from " + event.getSource());
     	
 	}
+	
+	@Bean
+	Jaxb2Marshaller marshaller() {
+		Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+		  jaxb2Marshaller.setPackagesToScan("com.irengine.tdd");
+		  Map<String,Object> map = new HashMap<String,Object>();
+		  map.put("jaxb.formatted.output", true);
+		  jaxb2Marshaller.setMarshallerProperties(map);
+	      return jaxb2Marshaller;
+	}
+	
 
     public static void main(String[] args) {
     	
